@@ -10,12 +10,12 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/finnigja/gomat"
+	"github.com/finnigja/gomat/discover"
+	"github.com/finnigja/gomat/mattertlv"
+	"github.com/finnigja/gomat/onboarding_payload"
+	"github.com/finnigja/gomat/symbols"
 	"github.com/spf13/cobra"
-	"github.com/tom-code/gomat"
-	"github.com/tom-code/gomat/discover"
-	"github.com/tom-code/gomat/mattertlv"
-	"github.com/tom-code/gomat/onboarding_payload"
-	"github.com/tom-code/gomat/symbols"
 )
 
 func filter_devices(devices []discover.DiscoveredDevice, qr onboarding_payload.QrContent) []discover.DiscoveredDevice {
@@ -590,12 +590,12 @@ func main() {
 			}
 			var tlv mattertlv.TLVBuffer
 			b := bytes.NewBuffer([]byte{})
-			for x:=0; x<5; x++ {
-				for y:=0; y<5; y++ {
+			for x := 0; x < 5; x++ {
+				for y := 0; y < 5; y++ {
 					b.WriteByte(byte(0xff))
-					b.WriteByte(byte(x*50+50))
+					b.WriteByte(byte(x*50 + 50))
 					b.WriteByte(byte(10))
-					b.WriteByte(byte(y*40))
+					b.WriteByte(byte(y * 40))
 				}
 			}
 			tlv.WriteOctetString(0, b.Bytes())

@@ -9,8 +9,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/tom-code/gomat/ccm"
-	"github.com/tom-code/gomat/mattertlv"
+	"github.com/finnigja/gomat/ccm"
+	"github.com/finnigja/gomat/mattertlv"
 )
 
 type udpChannel struct {
