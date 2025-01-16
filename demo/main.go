@@ -7,6 +7,8 @@ import (
 	"log"
 	"math/rand"
 	"net"
+	"os/user"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -17,6 +19,17 @@ import (
 	"github.com/finnigja/gomat/symbols"
 	"github.com/spf13/cobra"
 )
+
+func getBasePath() (string, error) {
+	usr, err := user.Current()
+	if err != nil {
+		fmt.Println(err)
+		return "", err
+	}
+	homeDir := usr.HomeDir
+	basePath := filepath.Join(homeDir, ".gomat")
+	return basePath, nil
+}
 
 func filter_devices(devices []discover.DiscoveredDevice, qr onboarding_payload.QrContent) []discover.DiscoveredDevice {
 	out := []discover.DiscoveredDevice{}
@@ -383,7 +396,8 @@ func test_subscribe(cmd *cobra.Command, args []string) {
 }
 
 func createBasicFabric(id uint64) *gomat.Fabric {
-	cert_manager := gomat.NewFileCertManager(id)
+	basePath, _ := getBasePath()
+	cert_manager := gomat.NewFileCertManager(id, basePath)
 	err := cert_manager.Load()
 	if err != nil {
 		panic(err)
@@ -726,7 +740,8 @@ func main() {
 			if err != nil {
 				panic(fmt.Sprintf("invalid fabric id %s", fabric_id_str))
 			}
-			cm := gomat.NewFileCertManager(id)
+			basePath, _ := getBasePath()
+			cm := gomat.NewFileCertManager(id, basePath)
 			err = cm.BootstrapCa()
 			if err != nil {
 				panic(err)
