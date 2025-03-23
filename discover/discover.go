@@ -69,11 +69,11 @@ func Discover(iface string) ([]DiscoveredDevice, error) {
 				continue
 			}
 			addrs := []net.IP{}
-			if entry.AddrV6 != nil {
-				addrs = append(addrs, entry.AddrV6)
+			if entry.AddrV4 != nil {
+				addrs = append(addrs, entry.AddrV4)
 			}
 			if entry.AddrV6 != nil {
-				addrs = append(addrs, entry.AddrV4)
+				addrs = append(addrs, entry.AddrV6)
 			}
 			dev := DiscoveredDevice{
 				Name:  entry.Name,
